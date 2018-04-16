@@ -1,0 +1,51 @@
+---
+layout: default
+---
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>
+
+
+  </header>
+  <div>
+  Categories: {% if page.categories %} | 
+  {% for tag in page.categories %}
+    <span class="badge"><a href="{{ site.baseurl }}/category#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></span>
+  {% endfor %}
+  {% endif %}
+
+  </div>
+  
+  <div>
+  Tags: {% if page.tags %} | 
+  {% for tag in page.tags %}
+    <span class="badge"><a href="{{ site.baseurl }}/tag#{{ tag | slugify }}" class="post-tag">{{ tag }}</a></span>
+  {% endfor %}
+  {% endif %}
+
+  </div>
+  <div class="post-content" itemprop="articleBody">
+    {{ content }}
+  </div>
+  <div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    {% for post in site.related_posts limit:3 %}
+      <li>
+        <h3>
+          <a href="{{ site.baseurl }}{{ post.url }}">
+            {{ post.title }}
+            <small>{{ post.date | date_to_string }}</small>
+          </a>
+        </h3>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+  {% if site.disqus.shortname %}
+    {% include disqus_comments.html %}
+  {% endif %}
+</article>
